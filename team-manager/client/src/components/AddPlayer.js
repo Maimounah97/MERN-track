@@ -5,6 +5,7 @@ export default () => {
     const [players, setPlayers] = useState([]);
     const [loaded, setLoaded] = useState(false);
     const [errors, setErrors] = useState([]);
+    const [nameError, setNameError] = useState("");
    
     // const removeFromDom = authorId => {
     //     setPlayers(authors.filter(author => author._id != authorId));
@@ -12,6 +13,7 @@ export default () => {
     const createPlayer = player => {
         axios.post('http://localhost:8000/api/player/new', player)
             .then(res=>{
+               
                 console.log("data from create api")
                 console.log(res.data)
                 setPlayers([...players, res.data]);
@@ -29,7 +31,14 @@ export default () => {
     return (
         <div>
             {errors.map((err, index) => <p key={index}>{err}</p>)}
+
            <PlayerForm onSubmitProp={createPlayer} initialName="" initialPosition=""/>
+           {
+                    nameError ?
+                    <p style={{color:'red'}}>{ nameError }</p> :
+                    ''
+                }
+
            <hr/>
         </div>
     )

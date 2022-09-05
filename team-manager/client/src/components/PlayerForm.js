@@ -9,13 +9,18 @@ import {
 export default props => {
     const { initialName, initialPosition, onSubmitProp } = props;
     const [name, setName] = useState(initialName);
+    const [nameError, setNameError] = useState("");
     const [position, setPosition] = useState(initialPosition);
     const onSubmitHandler = e => {
         console.log("button clicked")
         e.preventDefault();
+        
         onSubmitProp({name,position});
+        
         // setName(name)
     }
+
+   
         
     return (
         <div>
@@ -28,6 +33,7 @@ export default props => {
                     name="name" value={name} 
                     onChange={(e) => { setName(e.target.value) }} />
             </p>
+            {(name.length < 2 && name.length != 0) ? (<span className="text-danger">Name must be than 2 characters</span>) : ""}
             <p>
                 <label>Position</label><br />
                 <input 
